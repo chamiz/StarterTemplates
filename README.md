@@ -45,3 +45,10 @@ SpringTestNG
 <br/>
 https://github.com/chamiz/StarterTemplates/tree/master/SpringTestNG
 
+
+## Gradle Incubating 
+
+https://docs.gradle.org/current/userguide/build_init_plugin.html
+
+
+
