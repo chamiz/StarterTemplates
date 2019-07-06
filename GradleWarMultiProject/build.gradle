@@ -1,0 +1,42 @@
+// java and war plugins provide basic build support for our main project.
+plugins {
+    id 'java'
+    id 'war'
+}
+
+// gretty lets us easily test our war using an embedded tomcat or embedded
+// jetty server.  
+apply from: 'https://raw.github.com/akhikhl/gretty/master/pluginScripts/gretty.plugin'
+
+// In this section you declare where to find the dependencies of your project
+repositories {
+    // Use 'jcenter' for resolving your dependencies.
+    // You can declare any Maven/Ivy/file repository here.
+    jcenter()
+}
+
+// In this section you declare the dependencies for your production and test code
+dependencies {
+    
+    // Important! Here we add the dependent jar as a dependent jar.
+    // This allows us to refer to code within the jar dynamically, and also includes
+    // the jar in the war build.
+    compile project(':jar_dependency')    
+
+    // As in jar_dependency/build.xml, slf4j and junit are here for illustration
+    compile  'org.slf4j:slf4j-api:1.7.21'    
+
+    // Declare the dependency for your favourite test framework you want to use in your tests.
+    // TestNG is also supported by the Gradle Test task. Just change the
+    // testCompile dependency to testCompile 'org.testng:testng:6.8.1' and add
+    // 'test.useTestNG()' to your build script.
+    testCompile 'junit:junit:4+'
+}
+
+// Configure gretty for auto-reload.  
+// Important! The necessary addition here is to add the src directory for 
+// jar_dependency to the list. 
+// (The defaults for scanDir and fastReload will do what we want otherwise.)
+gretty {
+    scanDir "jar_dependency/src/main/java"
+}
